@@ -77,9 +77,12 @@ input,select{
 .form-actions{display:flex;gap:8px;margin-top:1rem;justify-content:flex-end}
 .btn-primary{background:var(--color-text-primary);color:var(--color-background-primary);border:none;padding:8px 20px;border-radius:var(--border-radius-md);font-size:14px;cursor:pointer}
 .btn-ghost{background:none;border:0.5px solid var(--color-border-secondary);padding:8px 16px;border-radius:var(--border-radius-md);font-size:14px;cursor:pointer;color:var(--color-text-primary)}
-.type-badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500}
-.badge-bank{background:#E6F1FB;color:#0C447C}.badge-invest{background:#EAF3DE;color:#27500A}
-.badge-crypto{background:#FAEEDA;color:#633806}.badge-imovel{background:#FAECE7;color:#712B13}
+.type-badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
+.tipo-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.tipo-row:last-child{border-bottom:none;padding-bottom:0}
+.tipo-color-input{width:36px;height:32px;padding:2px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer}
+.tipo-name-input{flex:1;font-size:14px}
+.tipo-count{font-size:12px;color:var(--color-text-secondary);white-space:nowrap}
 .empty-state{text-align:center;padding:3rem 1rem;color:var(--color-text-secondary);font-size:14px}
 .month-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
 .month-nav{display:flex;align-items:center;gap:12px}
@@ -121,6 +124,7 @@ th,td{padding:7px 4px}
   <button class="tab active" onclick="showPage('dashboard',event)"><i class="ti ti-layout-dashboard" aria-hidden="true"></i> Dashboard</button>
   <button class="tab" onclick="showPage('registo',event)"><i class="ti ti-pencil" aria-hidden="true"></i> Registar mês</button>
   <button class="tab" onclick="showPage('contas',event)"><i class="ti ti-building-bank" aria-hidden="true"></i> Contas</button>
+  <button class="tab" onclick="showPage('tipos',event)"><i class="ti ti-tags" aria-hidden="true"></i> Tipos</button>
   <button class="tab" onclick="showPage('evolucao',event)"><i class="ti ti-chart-line" aria-hidden="true"></i> Evolução</button>
 </div>
 
@@ -180,12 +184,7 @@ th,td{padding:7px 4px}
       </div>
       <div class="form-group">
         <label for="nova-tipo">Tipo</label>
-        <select id="nova-tipo">
-          <option value="bancaria">Conta bancária</option>
-          <option value="investimento">Investimento (ações/ETFs/fundos)</option>
-          <option value="crypto">Criptomoedas</option>
-          <option value="imovel">Imóvel / ativo real</option>
-        </select>
+        <select id="nova-tipo"></select>
       </div>
       <div class="form-group">
         <label for="nova-moeda">Moeda</label>
@@ -205,6 +204,29 @@ th,td{padding:7px 4px}
   <div id="lista-contas"></div>
 </div>
 
+<!-- TIPOS -->
+<div id="page-tipos" class="page">
+  <div id="tipos-alert" style="display:none"></div>
+  <div class="section-title">adicionar tipo</div>
+  <div class="card">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="novo-tipo-nome">Nome do tipo</label>
+        <input type="text" id="novo-tipo-nome" placeholder="ex: Obrigações">
+      </div>
+      <div class="form-group">
+        <label for="novo-tipo-cor">Cor</label>
+        <input type="color" id="novo-tipo-cor" value="#378ADD" style="height:36px;padding:2px">
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-primary" onclick="adicionarTipo()"><i class="ti ti-plus" aria-hidden="true"></i> Adicionar tipo</button>
+    </div>
+  </div>
+  <div class="section-title" style="margin-top:1.5rem">tipos existentes</div>
+  <div id="lista-tipos"></div>
+</div>
+
 <!-- EVOLUÇÃO -->
 <div id="page-evolucao" class="page">
   <div class="section-title">evolução do patrimônio total</div>
@@ -219,10 +241,19 @@ th,td{padding:7px 4px}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 const STORAGE_KEY='portfolio_v1';
-const TIPOS={bancaria:{label:'Bancária',color:'#378ADD',badge:'badge-bank'},investimento:{label:'Investimento',color:'#639922',badge:'badge-invest'},crypto:{label:'Cripto',color:'#BA7517',badge:'badge-crypto'},imovel:{label:'Imóvel',color:'#D85A30',badge:'badge-imovel'}};
+const TIPOS_SEED={
+  ordem:{label:'Depósitos à ordem',color:'#378ADD'},
+  prazo:{label:'Depósitos a prazo',color:'#1F6FBF'},
+  p2p:{label:'P2P',color:'#8A5FD6'},
+  divida:{label:'Dívida Pública',color:'#5B3FA8'},
+  crypto:{label:'Criptomoedas',color:'#BA7517'},
+  investimento:{label:'Investimentos bolsa',color:'#639922'},
+  emergencia:{label:'Fundo de Emergência',color:'#1D9E75'},
+  imovel:{label:'Imóveis / outros ativos',color:'#D85A30'}
+};
 const MESES=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
-let state={contas:[],registos:{}};
+let state={contas:[],registos:{},tipos:{}};
 let mesAtual=new Date();
 mesAtual.setDate(1);
 let charts={};
@@ -232,6 +263,15 @@ function save(){
 }
 function load(){
   try{const d=localStorage.getItem(STORAGE_KEY);if(d)state=JSON.parse(d)}catch(e){}
+  if(!state.tipos||!Object.keys(state.tipos).length){
+    state.tipos=JSON.parse(JSON.stringify(TIPOS_SEED));
+    save();
+  }
+}
+function tipoInfo(id){return state.tipos[id]||{label:id,color:'#888780'}}
+function badgeStyle(tipo){
+  const c=tipoInfo(tipo).color;
+  return `background:${c}22;color:${c}`;
 }
 function mesKey(d){return d.getFullYear()+'-'+(d.getMonth()+1).toString().padStart(2,'0')}
 function mesDisplay(d){return MESES[d.getMonth()]+' '+d.getFullYear()}
@@ -253,8 +293,16 @@ function showPage(p,evt){
   if(evt&&evt.currentTarget)evt.currentTarget.classList.add('active');
   if(p==='dashboard')renderDashboard();
   if(p==='registo')renderRegisto();
-  if(p==='contas')renderContas();
+  if(p==='contas'){populateTipoSelect();renderContas();}
+  if(p==='tipos')renderTipos();
   if(p==='evolucao')renderEvolucao();
+}
+
+function populateTipoSelect(){
+  const sel=document.getElementById('nova-tipo');
+  const current=sel.value;
+  sel.innerHTML=Object.entries(state.tipos).map(([id,t])=>`<option value="${id}">${t.label}</option>`).join('');
+  if(current&&state.tipos[current])sel.value=current;
 }
 
 function renderDashboard(){
@@ -288,20 +336,21 @@ function renderDashboard(){
     });
   }
 
-  document.getElementById('dash-metrics').innerHTML=`
+  let metricsHtml=`
     <div class="metric"><div class="metric-label">patrimônio total</div><div class="metric-value">${fmt(lastTotal)}</div>
       <div class="metric-delta ${delta>0?'delta-pos':delta<0?'delta-neg':'delta-neu'}">${delta>=0?'▲':'▼'} ${fmt(Math.abs(delta))} (${deltaPct.toFixed(1)}%) vs mês anterior</div>
-    </div>
-    <div class="metric"><div class="metric-label">bancário</div><div class="metric-value">${fmt(totaisPorTipo.bancaria||0)}</div></div>
-    <div class="metric"><div class="metric-label">investimentos</div><div class="metric-value">${fmt(totaisPorTipo.investimento||0)}</div></div>
-    <div class="metric"><div class="metric-label">cripto</div><div class="metric-value">${fmt(totaisPorTipo.crypto||0)}</div></div>
-    ${totaisPorTipo.imovel?`<div class="metric"><div class="metric-label">imóveis</div><div class="metric-value">${fmt(totaisPorTipo.imovel||0)}</div></div>`:''}
-  `;
+    </div>`;
+  Object.keys(state.tipos).forEach(tipo=>{
+    if(totaisPorTipo[tipo]!==undefined){
+      metricsHtml+=`<div class="metric"><div class="metric-label">${tipoInfo(tipo).label.toLowerCase()}</div><div class="metric-value">${fmt(totaisPorTipo[tipo])}</div></div>`;
+    }
+  });
+  document.getElementById('dash-metrics').innerHTML=metricsHtml;
 
   destroyChart('chart-tipo');destroyChart('chart-banco');
-  const tipoLabels=Object.keys(totaisPorTipo).map(k=>TIPOS[k]?.label||k);
+  const tipoLabels=Object.keys(totaisPorTipo).map(k=>tipoInfo(k)?.label||k);
   const tipoVals=Object.values(totaisPorTipo);
-  const tipoColors=Object.keys(totaisPorTipo).map(k=>TIPOS[k]?.color||'#888');
+  const tipoColors=Object.keys(totaisPorTipo).map(k=>tipoInfo(k)?.color||'#888');
   if(tipoVals.length>0){
     charts['chart-tipo']=new Chart(document.getElementById('chart-tipo'),{type:'doughnut',data:{labels:tipoLabels,datasets:[{data:tipoVals,backgroundColor:tipoColors,borderWidth:2,borderColor:'transparent'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+fmt(ctx.raw)}}}}});
   }
@@ -327,7 +376,7 @@ function renderDashboard(){
     html+=`<div class="card"><div style="font-weight:500;font-size:14px;margin-bottom:8px">${banco}</div>`;
     info.contas.forEach(c=>{
       const v=parseFloat(r?r[c.id]||0:0);
-      html+=`<div class="account-row"><span class="account-dot" style="background:${TIPOS[c.tipo]?.color||'#888'}"></span><div><div class="account-name">${c.nome}</div></div><div><span class="type-badge ${TIPOS[c.tipo]?.badge||''}">${TIPOS[c.tipo]?.label||c.tipo}</span></div><div class="account-val">${fmt(v,c.moeda)}</div></div>`;
+      html+=`<div class="account-row"><span class="account-dot" style="background:${tipoInfo(c.tipo)?.color||'#888'}"></span><div><div class="account-name">${c.nome}</div></div><div><span class="type-badge" style="${badgeStyle(c.tipo)}">${tipoInfo(c.tipo)?.label||c.tipo}</span></div><div class="account-val">${fmt(v,c.moeda)}</div></div>`;
     });
     html+='</div>';
   });
@@ -362,7 +411,7 @@ function renderRegisto(){
     html+=`<div class="registo-card"><div class="registo-header"><span style="font-weight:500;font-size:14px">${banco}</span><span class="registo-total">${fmt(subtotal)}</span></div>`;
     contas.forEach(c=>{
       const val=existing?existing[c.id]||'':'';
-      html+=`<div class="registo-input-row"><span class="account-dot" style="background:${TIPOS[c.tipo]?.color||'#888'}"></span><span class="registo-name">${c.nome} <span class="type-badge ${TIPOS[c.tipo]?.badge||''}">${TIPOS[c.tipo]?.label||''}</span></span><input class="registo-input" type="number" step="0.01" min="0" placeholder="0,00" value="${val}" id="inp-${c.id}" oninput="updateSubtotal('${banco}',this)"></div>`;
+      html+=`<div class="registo-input-row"><span class="account-dot" style="background:${tipoInfo(c.tipo)?.color||'#888'}"></span><span class="registo-name">${c.nome} <span class="type-badge" style="${badgeStyle(c.tipo)}">${tipoInfo(c.tipo)?.label||''}</span></span><input class="registo-input" type="number" step="0.01" min="0" placeholder="0,00" value="${val}" id="inp-${c.id}" oninput="updateSubtotal('${banco}',this)"></div>`;
     });
     html+='</div>';
   });
@@ -411,6 +460,72 @@ function removerConta(id){
   save();renderContas();
 }
 
+function slugify(s){
+  return 't'+s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'')+Date.now().toString().slice(-4);
+}
+
+function adicionarTipo(){
+  const nome=document.getElementById('novo-tipo-nome').value.trim();
+  const cor=document.getElementById('novo-tipo-cor').value;
+  if(!nome){
+    showAlert('tipos','Indica um nome para o tipo.','info');return;
+  }
+  const jaExiste=Object.values(state.tipos).some(t=>t.label.toLowerCase()===nome.toLowerCase());
+  if(jaExiste){
+    showAlert('tipos','Já existe um tipo com esse nome.','info');return;
+  }
+  const id=slugify(nome);
+  state.tipos[id]={label:nome,color:cor};
+  save();
+  document.getElementById('novo-tipo-nome').value='';
+  showAlert('tipos','Tipo adicionado com sucesso.','success');
+  renderTipos();
+}
+
+function editarTipoNome(id,valor){
+  if(!state.tipos[id])return;
+  state.tipos[id].label=valor;
+  save();
+}
+
+function editarTipoCor(id,valor){
+  if(!state.tipos[id])return;
+  state.tipos[id].color=valor;
+  save();
+  renderTipos();
+}
+
+function removerTipo(id){
+  const emUso=state.contas.filter(c=>c.tipo===id).length;
+  if(emUso>0){
+    showAlert('tipos',`Não é possível remover: ${emUso} conta(s) usam este tipo. Muda o tipo dessas contas primeiro.`,'info');
+    return;
+  }
+  delete state.tipos[id];
+  save();
+  renderTipos();
+}
+
+function renderTipos(){
+  const ids=Object.keys(state.tipos);
+  if(!ids.length){
+    document.getElementById('lista-tipos').innerHTML='<div class="empty-state">Ainda sem tipos definidos.</div>';return;
+  }
+  let html='<div class="card">';
+  ids.forEach(id=>{
+    const t=state.tipos[id];
+    const count=state.contas.filter(c=>c.tipo===id).length;
+    html+=`<div class="tipo-row">
+      <input type="color" class="tipo-color-input" value="${t.color}" onchange="editarTipoCor('${id}',this.value)" aria-label="Cor de ${t.label}">
+      <input type="text" class="tipo-name-input" value="${t.label}" onchange="editarTipoNome('${id}',this.value)" aria-label="Nome do tipo">
+      <span class="tipo-count">${count} conta${count===1?'':'s'}</span>
+      <button class="remove-btn" onclick="removerTipo('${id}')" aria-label="Remover ${t.label}"><i class="ti ti-trash" aria-hidden="true"></i></button>
+    </div>`;
+  });
+  html+='</div>';
+  document.getElementById('lista-tipos').innerHTML=html;
+}
+
 function showAlert(page,msg,type){
   const el=document.getElementById(page+'-alert');
   el.innerHTML=`<div class="alert alert-${type}">${msg}</div>`;
@@ -431,7 +546,7 @@ function renderContas(){
   Object.entries(bancos).forEach(([banco,contas])=>{
     html+=`<div class="card"><div style="font-weight:500;font-size:14px;margin-bottom:8px">${banco}</div>`;
     contas.forEach(c=>{
-      html+=`<div class="account-row"><span class="account-dot" style="background:${TIPOS[c.tipo]?.color||'#888'}"></span><div class="account-name">${c.nome}<div class="account-bank">${c.moeda}</div></div><span class="type-badge ${TIPOS[c.tipo]?.badge||''}">${TIPOS[c.tipo]?.label||c.tipo}</span><button class="remove-btn" onclick="removerConta('${c.id}')" aria-label="Remover ${c.nome}"><i class="ti ti-trash" aria-hidden="true"></i></button></div>`;
+      html+=`<div class="account-row"><span class="account-dot" style="background:${tipoInfo(c.tipo)?.color||'#888'}"></span><div class="account-name">${c.nome}<div class="account-bank">${c.moeda}</div></div><span class="type-badge" style="${badgeStyle(c.tipo)}">${tipoInfo(c.tipo)?.label||c.tipo}</span><button class="remove-btn" onclick="removerConta('${c.id}')" aria-label="Remover ${c.nome}"><i class="ti ti-trash" aria-hidden="true"></i></button></div>`;
     });
     html+='</div>';
   });
@@ -453,19 +568,19 @@ function renderEvolucao(){
   const tiposPresentes=[...new Set(state.contas.map(c=>c.tipo))];
   const datasets=tiposPresentes.map(tipo=>{
     return {
-      label:TIPOS[tipo]?.label||tipo,
+      label:tipoInfo(tipo)?.label||tipo,
       data:keys.map(k=>{
         const r=state.registos[k];
         if(!r)return 0;
         return state.contas.filter(c=>c.tipo===tipo).reduce((a,c)=>a+parseFloat(r[c.id]||0),0);
       }),
-      backgroundColor:TIPOS[tipo]?.color+'33',
-      borderColor:TIPOS[tipo]?.color,
+      backgroundColor:tipoInfo(tipo)?.color+'33',
+      borderColor:tipoInfo(tipo)?.color,
       borderWidth:2,
       fill:true,
       tension:0.4,
       pointRadius:4,
-      pointBackgroundColor:TIPOS[tipo]?.color
+      pointBackgroundColor:tipoInfo(tipo)?.color
     };
   });
   datasets.push({
@@ -482,14 +597,14 @@ function renderEvolucao(){
   });
 
   const legend=document.getElementById('evolucao-legend');
-  legend.innerHTML=[...tiposPresentes.map(t=>`<span class="legend-item"><span class="legend-dot" style="background:${TIPOS[t]?.color}"></span>${TIPOS[t]?.label||t}</span>`),`<span class="legend-item"><span class="legend-dot" style="background:#7F77DD;border:1px dashed #7F77DD"></span>Total</span>`].join('');
+  legend.innerHTML=[...tiposPresentes.map(t=>`<span class="legend-item"><span class="legend-dot" style="background:${tipoInfo(t)?.color}"></span>${tipoInfo(t)?.label||t}</span>`),`<span class="legend-item"><span class="legend-dot" style="background:#7F77DD;border:1px dashed #7F77DD"></span>Total</span>`].join('');
 
   const canvas=document.getElementById('chart-evolucao');
   if(!canvas)return;
   charts['chart-evolucao']=new Chart(canvas,{type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:ctx=>ctx.dataset.label+': '+fmt(ctx.raw)}}},scales:{x:{grid:{color:'rgba(128,128,128,.1)'},ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{grid:{color:'rgba(128,128,128,.1)'},ticks:{callback:v=>v.toLocaleString('pt-PT')+'€',font:{size:11}}}}}});
 
   let thtml='<div class="card"><table><thead><tr style="border-bottom:0.5px solid var(--color-border-tertiary)"><th style="text-align:left;color:var(--color-text-secondary);font-weight:500">Mês</th>';
-  tiposPresentes.forEach(t=>{thtml+=`<th style="text-align:right;color:var(--color-text-secondary);font-weight:500">${TIPOS[t]?.label}</th>`;});
+  tiposPresentes.forEach(t=>{thtml+=`<th style="text-align:right;color:var(--color-text-secondary);font-weight:500">${tipoInfo(t)?.label}</th>`;});
   thtml+='<th style="text-align:right;color:var(--color-text-secondary);font-weight:500">Total</th><th style="text-align:right;color:var(--color-text-secondary);font-weight:500">Δ</th></tr></thead><tbody>';
   const keysRev=[...keys].reverse();
   keysRev.forEach((k,i)=>{
@@ -529,8 +644,12 @@ function importarDados(evt){
       const data=JSON.parse(e.target.result);
       if(data.contas&&data.registos){
         state=data;
+        if(!state.tipos||!Object.keys(state.tipos).length){
+          state.tipos=JSON.parse(JSON.stringify(TIPOS_SEED));
+        }
         save();
-        renderDashboard();renderRegisto();renderContas();renderEvolucao();
+        populateTipoSelect();
+        renderDashboard();renderRegisto();renderContas();renderTipos();renderEvolucao();
         alert('Backup importado com sucesso.');
       }else{
         alert('Ficheiro inválido.');
@@ -546,6 +665,7 @@ function importarDados(evt){
 function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id]}}
 
 load();
+populateTipoSelect();
 renderDashboard();
 renderRegisto();
 </script>
