@@ -22,7 +22,7 @@
   --border-radius-lg:12px;
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
 }
-@media (prefers-color-scheme: dark){
+@media(prefers-color-scheme:dark){
   :root{
     --color-text-primary:#f0f0f0;
     --color-text-secondary:#a0a0a0;
@@ -42,14 +42,7 @@ html,body{font-family:var(--font-sans);background:var(--color-background-primary
 body{padding:0 0 3rem 0}
 .container{max-width:960px;margin:0 auto;padding:1.5rem 1rem}
 h1{font-size:20px;font-weight:600;margin-bottom:1.25rem}
-input,select{
-  background:var(--color-background-primary);
-  color:var(--color-text-primary);
-  border:0.5px solid var(--color-border-secondary);
-  border-radius:var(--border-radius-md);
-  padding:8px 10px;
-  font-family:var(--font-sans);
-}
+input,select{background:var(--color-background-primary);color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:8px 10px;font-family:var(--font-sans)}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 .tabs{display:flex;gap:2px;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:1.5rem;overflow-x:auto}
 .tab{padding:8px 16px;font-size:14px;cursor:pointer;border:none;background:none;color:var(--color-text-secondary);border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
@@ -64,12 +57,16 @@ input,select{
 .delta-pos{color:var(--color-text-success)}.delta-neg{color:var(--color-text-danger)}.delta-neu{color:var(--color-text-secondary)}
 .section-title{font-size:14px;font-weight:500;color:var(--color-text-secondary);margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em}
 .card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:12px}
-.account-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.account-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);flex-wrap:wrap}
 .account-row:last-child{border-bottom:none;padding-bottom:0}
 .account-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.account-name{flex:1;font-size:14px;color:var(--color-text-primary)}
+.account-name{flex:1;font-size:14px;color:var(--color-text-primary);min-width:100px}
 .account-bank{font-size:12px;color:var(--color-text-secondary)}
 .account-val{font-size:14px;font-weight:500;color:var(--color-text-primary)}
+.account-rent{font-size:12px;font-weight:500;padding:2px 7px;border-radius:20px}
+.rent-pos{background:var(--color-background-success);color:var(--color-text-success)}
+.rent-neg{background:#fce8e8;color:var(--color-text-danger)}
+.rent-neu{background:var(--color-background-secondary);color:var(--color-text-secondary)}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .form-group{display:flex;flex-direction:column;gap:6px}
 .form-group label{font-size:13px;color:var(--color-text-secondary)}
@@ -78,11 +75,13 @@ input,select{
 .btn-primary{background:var(--color-text-primary);color:var(--color-background-primary);border:none;padding:8px 20px;border-radius:var(--border-radius-md);font-size:14px;cursor:pointer}
 .btn-ghost{background:none;border:0.5px solid var(--color-border-secondary);padding:8px 16px;border-radius:var(--border-radius-md);font-size:14px;cursor:pointer;color:var(--color-text-primary)}
 .type-badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
-.tipo-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.tipo-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);flex-wrap:wrap}
 .tipo-row:last-child{border-bottom:none;padding-bottom:0}
-.tipo-color-input{width:36px;height:32px;padding:2px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer}
-.tipo-name-input{flex:1;font-size:14px}
+.tipo-color-input{width:36px;height:32px;padding:2px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer;flex-shrink:0}
+.tipo-name-input{flex:1;font-size:14px;min-width:120px}
 .tipo-count{font-size:12px;color:var(--color-text-secondary);white-space:nowrap}
+.toggle-wrap{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary);white-space:nowrap;cursor:pointer}
+.toggle-wrap input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:var(--color-text-primary)}
 .empty-state{text-align:center;padding:3rem 1rem;color:var(--color-text-secondary);font-size:14px}
 .month-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
 .month-nav{display:flex;align-items:center;gap:12px}
@@ -91,10 +90,13 @@ input,select{
 .registo-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:8px}
 .registo-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .registo-total{font-size:13px;color:var(--color-text-secondary)}
-.registo-input-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
-.registo-input-row:last-child{margin-bottom:0}
-.registo-name{flex:1;font-size:13px;color:var(--color-text-primary);min-width:140px}
-.registo-input{width:140px;font-size:14px;text-align:right}
+.registo-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary);flex-wrap:wrap}
+.registo-row:last-child{border-bottom:none;padding-bottom:0}
+.registo-name{flex:1;font-size:13px;color:var(--color-text-primary);min-width:120px}
+.registo-input{width:130px;font-size:14px;text-align:right}
+.registo-reforco{width:110px;font-size:14px;text-align:right;background:var(--color-background-secondary)}
+.registo-inv-computed{font-size:11px;color:var(--color-text-secondary);white-space:nowrap}
+.registo-rent-pill{font-size:11px;font-weight:500;padding:2px 7px;border-radius:20px;min-width:52px;text-align:center;white-space:nowrap}
 .save-btn-wrap{margin-top:1rem;display:flex;justify-content:flex-end}
 .chart-wrap{position:relative;width:100%;height:280px;margin-bottom:1.5rem}
 .no-data-overlay{display:flex;align-items:center;justify-content:center;height:200px;color:var(--color-text-secondary);font-size:14px}
@@ -107,12 +109,16 @@ input,select{
 .alert-success{background:var(--color-background-success);color:var(--color-text-success)}
 .alert-info{background:var(--color-background-info);color:var(--color-text-info)}
 .top-actions{display:flex;justify-content:flex-end;gap:8px;margin-bottom:1rem}
+.rentab-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.rentab-row:last-child{border-bottom:none}
+.inv-inicial-hint{font-size:12px;color:var(--color-text-secondary);margin-top:4px}
 table{width:100%;font-size:13px;border-collapse:collapse}
 th,td{padding:7px 4px}
-@media (max-width:600px){
+@media(max-width:600px){
   .form-grid{grid-template-columns:1fr}
   .metric-grid{grid-template-columns:repeat(2,1fr)}
   div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important}
+  .registo-input,.registo-reforco{width:90px}
 }
 </style>
 </head>
@@ -141,30 +147,31 @@ th,td{padding:7px 4px}
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
     <div>
       <div class="section-title">por tipo</div>
-      <div class="chart-wrap" style="height:200px"><canvas id="chart-tipo" role="img" aria-label="Distribuição do portfolio por tipo de ativo"></canvas></div>
+      <div class="chart-wrap" style="height:200px"><canvas id="chart-tipo"></canvas></div>
     </div>
     <div>
       <div class="section-title">por banco / entidade</div>
-      <div class="chart-wrap" style="height:200px"><canvas id="chart-banco" role="img" aria-label="Distribuição do portfolio por banco"></canvas></div>
+      <div class="chart-wrap" style="height:200px"><canvas id="chart-banco"></canvas></div>
     </div>
   </div>
   <div class="section-title" style="margin-top:1rem">detalhe — mês atual</div>
   <div id="dash-detalhe"></div>
+  <div id="dash-rentab"></div>
 </div>
 
 <!-- REGISTAR MÊS -->
 <div id="page-registo" class="page">
   <div class="month-header">
     <div class="month-nav">
-      <button onclick="navMes(-1)" aria-label="Mês anterior"><i class="ti ti-chevron-left" aria-hidden="true"></i></button>
+      <button onclick="navMes(-1)" aria-label="Mês anterior"><i class="ti ti-chevron-left"></i></button>
       <span class="month-label" id="mes-label"></span>
-      <button onclick="navMes(1)" aria-label="Mês seguinte"><i class="ti ti-chevron-right" aria-hidden="true"></i></button>
+      <button onclick="navMes(1)" aria-label="Mês seguinte"><i class="ti ti-chevron-right"></i></button>
     </div>
     <span id="registo-status" style="font-size:12px;color:var(--color-text-secondary)"></span>
   </div>
   <div id="registo-contas"></div>
   <div class="save-btn-wrap">
-    <button class="btn-primary" onclick="guardarRegisto()"><i class="ti ti-device-floppy" aria-hidden="true"></i> Guardar registo</button>
+    <button class="btn-primary" onclick="guardarRegisto()"><i class="ti ti-device-floppy"></i> Guardar registo</button>
   </div>
 </div>
 
@@ -176,15 +183,15 @@ th,td{padding:7px 4px}
     <div class="form-grid">
       <div class="form-group">
         <label for="nova-nome">Nome da conta</label>
-        <input type="text" id="nova-nome" placeholder="ex: Conta à ordem">
+        <input type="text" id="nova-nome" placeholder="ex: ETF S&P500">
       </div>
       <div class="form-group">
         <label for="nova-banco">Banco / entidade</label>
-        <input type="text" id="nova-banco" placeholder="ex: CGD, Degiro, Binance">
+        <input type="text" id="nova-banco" placeholder="ex: Degiro, Binance, CGD">
       </div>
       <div class="form-group">
         <label for="nova-tipo">Tipo</label>
-        <select id="nova-tipo"></select>
+        <select id="nova-tipo" onchange="toggleInvInicialField()"></select>
       </div>
       <div class="form-group">
         <label for="nova-moeda">Moeda</label>
@@ -196,8 +203,13 @@ th,td{padding:7px 4px}
         </select>
       </div>
     </div>
+    <div class="form-group" id="inv-inicial-wrap" style="margin-top:12px;display:none">
+      <label for="nova-inv-inicial">Valor inicial investido</label>
+      <input type="number" id="nova-inv-inicial" step="0.01" min="0" placeholder="0,00" style="max-width:200px">
+      <span class="inv-inicial-hint">Montante total que já investiste nesta conta à data de criação.</span>
+    </div>
     <div class="form-actions">
-      <button class="btn-primary" onclick="adicionarConta()"><i class="ti ti-plus" aria-hidden="true"></i> Adicionar conta</button>
+      <button class="btn-primary" onclick="adicionarConta()"><i class="ti ti-plus"></i> Adicionar conta</button>
     </div>
   </div>
   <div class="section-title" style="margin-top:1.5rem">contas registadas</div>
@@ -219,8 +231,12 @@ th,td{padding:7px 4px}
         <input type="color" id="novo-tipo-cor" value="#378ADD" style="height:36px;padding:2px">
       </div>
     </div>
+    <div style="margin-top:10px;display:flex;align-items:center;gap:8px">
+      <input type="checkbox" id="novo-tipo-rent" style="width:15px;height:15px;accent-color:var(--color-text-primary)">
+      <label for="novo-tipo-rent" style="font-size:13px;color:var(--color-text-secondary);cursor:pointer">Registar reforços e calcular rentabilidade</label>
+    </div>
     <div class="form-actions">
-      <button class="btn-primary" onclick="adicionarTipo()"><i class="ti ti-plus" aria-hidden="true"></i> Adicionar tipo</button>
+      <button class="btn-primary" onclick="adicionarTipo()"><i class="ti ti-plus"></i> Adicionar tipo</button>
     </div>
   </div>
   <div class="section-title" style="margin-top:1.5rem">tipos existentes</div>
@@ -230,62 +246,80 @@ th,td{padding:7px 4px}
 <!-- EVOLUÇÃO -->
 <div id="page-evolucao" class="page">
   <div class="section-title">evolução do patrimônio total</div>
-  <div id="evolucao-legend" class="legend-row" style="margin-bottom:8px"></div>
-  <div class="chart-wrap"><canvas id="chart-evolucao" role="img" aria-label="Evolução mensal do patrimônio por tipo de ativo"></canvas></div>
+  <div id="evolucao-legend" class="legend-row"></div>
+  <div class="chart-wrap"><canvas id="chart-evolucao"></canvas></div>
   <div class="section-title" style="margin-top:1rem">histórico de registos</div>
   <div id="historico-tabela"></div>
 </div>
 
-</div>
+</div><!-- /container -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-const STORAGE_KEY='portfolio_v1';
-const TIPOS_SEED={
-  ordem:{label:'Depósitos à ordem',color:'#378ADD'},
-  prazo:{label:'Depósitos a prazo',color:'#1F6FBF'},
-  p2p:{label:'P2P',color:'#8A5FD6'},
-  divida:{label:'Dívida Pública',color:'#5B3FA8'},
-  crypto:{label:'Criptomoedas',color:'#BA7517'},
-  investimento:{label:'Investimentos bolsa',color:'#639922'},
-  emergencia:{label:'Fundo de Emergência',color:'#1D9E75'},
-  imovel:{label:'Imóveis / outros ativos',color:'#D85A30'}
-};
+const STORAGE_KEY='portfolio_v2';
 const MESES=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
+const TIPOS_SEED={
+  ordem:       {label:'Depósitos à ordem',      color:'#378ADD', trackRent:false},
+  prazo:       {label:'Depósitos a prazo',       color:'#1F6FBF', trackRent:false},
+  p2p:         {label:'P2P',                     color:'#8A5FD6', trackRent:true},
+  divida:      {label:'Dívida Pública',          color:'#5B3FA8', trackRent:true},
+  crypto:      {label:'Criptomoedas',            color:'#BA7517', trackRent:true},
+  investimento:{label:'Investimentos bolsa',     color:'#639922', trackRent:true},
+  emergencia:  {label:'Fundo de Emergência',     color:'#1D9E75', trackRent:false},
+  imovel:      {label:'Imóveis / outros ativos', color:'#D85A30', trackRent:false}
+};
+
+/* ═══════════════════════════════════
+   ESTADO
+   conta: {id, nome, banco, tipo, moeda, invInicial?}
+   registo[mesKey][contaId]: número (valor atual)
+   registo[mesKey][contaId+'_r']: número (reforço desse mês, opcional)
+═══════════════════════════════════ */
 let state={contas:[],registos:{},tipos:{}};
-let mesAtual=new Date();
-mesAtual.setDate(1);
+let mesAtual=new Date(); mesAtual.setDate(1);
 let charts={};
 
-function save(){
-  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}
-}
+function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
 function load(){
   try{const d=localStorage.getItem(STORAGE_KEY);if(d)state=JSON.parse(d)}catch(e){}
-  if(!state.tipos||!Object.keys(state.tipos).length){
-    state.tipos=JSON.parse(JSON.stringify(TIPOS_SEED));
-    save();
-  }
+  if(!state.tipos||!Object.keys(state.tipos).length){state.tipos=JSON.parse(JSON.stringify(TIPOS_SEED));save();}
+  Object.values(state.tipos).forEach(t=>{if(t.trackRent===undefined)t.trackRent=false;});
 }
-function tipoInfo(id){return state.tipos[id]||{label:id,color:'#888780'}}
-function badgeStyle(tipo){
-  const c=tipoInfo(tipo).color;
-  return `background:${c}22;color:${c}`;
-}
+
+/* ── helpers ── */
+function tipoInfo(id){return state.tipos[id]||{label:id,color:'#888780',trackRent:false}}
+function trackRent(id){return !!tipoInfo(id).trackRent}
+function badgeStyle(tipo){const c=tipoInfo(tipo).color;return `background:${c}22;color:${c}`}
 function mesKey(d){return d.getFullYear()+'-'+(d.getMonth()+1).toString().padStart(2,'0')}
 function mesDisplay(d){return MESES[d.getMonth()]+' '+d.getFullYear()}
 function fmt(v,moeda='EUR'){
-  const s={EUR:'€',USD:'$',GBP:'£',BTC:'₿'};
   if(moeda==='BTC')return '₿'+parseFloat(v).toFixed(4);
+  const s={EUR:'€',USD:'$',GBP:'£'};
   return parseFloat(v).toLocaleString('pt-PT',{minimumFractionDigits:2,maximumFractionDigits:2})+' '+(s[moeda]||moeda);
 }
-function totalPortfolio(key){
-  const r=state.registos[key];
-  if(!r)return null;
-  return Object.values(r).reduce((a,v)=>a+parseFloat(v||0),0);
+function fmtPct(p){return (p>=0?'+':'')+p.toFixed(2)+'%'}
+function rentClass(p){return p>0?'rent-pos':p<0?'rent-neg':'rent-neu'}
+
+function getValor(r,id){if(!r||r[id]===undefined)return 0;return parseFloat(r[id]||0)}
+function getReforco(r,id){if(!r||r[id+'_r']===undefined)return 0;return parseFloat(r[id+'_r']||0)}
+
+/* investido acumulado até um mesKey incluído (invInicial + soma de reforços) */
+function investidoAte(conta,ateKey){
+  if(!trackRent(conta.tipo))return null;
+  let total=parseFloat(conta.invInicial||0);
+  Object.keys(state.registos).sort().forEach(k=>{
+    if(k<=ateKey) total+=getReforco(state.registos[k],conta.id);
+  });
+  return total;
 }
 
+function totalPortfolio(key){
+  const r=state.registos[key];if(!r)return null;
+  return state.contas.reduce((a,c)=>a+getValor(r,c.id),0);
+}
+
+/* ── navegação ── */
 function showPage(p,evt){
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));
@@ -300,369 +334,440 @@ function showPage(p,evt){
 
 function populateTipoSelect(){
   const sel=document.getElementById('nova-tipo');
-  const current=sel.value;
+  const cur=sel.value;
   sel.innerHTML=Object.entries(state.tipos).map(([id,t])=>`<option value="${id}">${t.label}</option>`).join('');
-  if(current&&state.tipos[current])sel.value=current;
+  if(cur&&state.tipos[cur])sel.value=cur;
+  toggleInvInicialField();
 }
 
+function toggleInvInicialField(){
+  const tipo=document.getElementById('nova-tipo').value;
+  document.getElementById('inv-inicial-wrap').style.display=trackRent(tipo)?'flex':'none';
+  document.getElementById('inv-inicial-wrap').style.flexDirection='column';
+}
+
+/* ═══════════════════════════════════ DASHBOARD ═══════════════════════════════════ */
 function renderDashboard(){
   const keys=Object.keys(state.registos).sort();
   const lastKey=keys[keys.length-1];
   const prevKey=keys[keys.length-2];
-  const lastTotal=lastKey?totalPortfolio(lastKey):0;
-  const prevTotal=prevKey?totalPortfolio(prevKey):0;
+  const lastTotal=lastKey?totalPortfolio(lastKey)||0:0;
+  const prevTotal=prevKey?totalPortfolio(prevKey)||0:0;
   const delta=lastTotal-prevTotal;
-  const deltaPct=prevTotal>0?((delta/prevTotal)*100):0;
+  const deltaPct=prevTotal>0?(delta/prevTotal*100):0;
 
-  let alert='';
   const today=new Date();
+  let alertHtml='';
   if(today.getDate()>=8&&today.getDate()<=12){
-    const thisKey=mesKey(today);
-    if(!state.registos[thisKey]){
-      alert=`<div class="alert alert-info"><i class="ti ti-bell" aria-hidden="true"></i> É altura de registar os valores de ${mesDisplay(today)}!</div>`;
-    }
+    const tk=mesKey(today);
+    if(!state.registos[tk])
+      alertHtml=`<div class="alert alert-info"><i class="ti ti-bell"></i> É altura de registar os valores de ${mesDisplay(today)}!</div>`;
   }
-  document.getElementById('dash-alert').innerHTML=alert;
-  document.getElementById('dash-alert').style.display=alert?'block':'none';
+  const da=document.getElementById('dash-alert');
+  da.innerHTML=alertHtml; da.style.display=alertHtml?'block':'none';
 
-  const totaisPorTipo={};
-  const totaisPorBanco={};
-  if(lastKey&&state.registos[lastKey]){
+  /* totais por tipo e investido por tipo */
+  const totV={},totI={},totB={};
+  if(lastKey){
     const r=state.registos[lastKey];
     state.contas.forEach(c=>{
-      const v=parseFloat(r[c.id]||0);
-      totaisPorTipo[c.tipo]=(totaisPorTipo[c.tipo]||0)+v;
-      totaisPorBanco[c.banco]=(totaisPorBanco[c.banco]||0)+v;
+      const v=getValor(r,c.id);
+      totV[c.tipo]=(totV[c.tipo]||0)+v;
+      totB[c.banco]=(totB[c.banco]||0)+v;
+      if(trackRent(c.tipo)){
+        const inv=investidoAte(c,lastKey);
+        if(inv!==null) totI[c.tipo]=(totI[c.tipo]||0)+inv;
+      }
     });
   }
 
-  let metricsHtml=`
-    <div class="metric"><div class="metric-label">patrimônio total</div><div class="metric-value">${fmt(lastTotal)}</div>
-      <div class="metric-delta ${delta>0?'delta-pos':delta<0?'delta-neg':'delta-neu'}">${delta>=0?'▲':'▼'} ${fmt(Math.abs(delta))} (${deltaPct.toFixed(1)}%) vs mês anterior</div>
-    </div>`;
+  let mh=`<div class="metric">
+    <div class="metric-label">patrimônio total</div>
+    <div class="metric-value">${fmt(lastTotal)}</div>
+    <div class="metric-delta ${delta>0?'delta-pos':delta<0?'delta-neg':'delta-neu'}">${delta>=0?'▲':'▼'} ${fmt(Math.abs(delta))} (${deltaPct.toFixed(1)}%) vs mês anterior</div>
+  </div>`;
   Object.keys(state.tipos).forEach(tipo=>{
-    if(totaisPorTipo[tipo]!==undefined){
-      metricsHtml+=`<div class="metric"><div class="metric-label">${tipoInfo(tipo).label.toLowerCase()}</div><div class="metric-value">${fmt(totaisPorTipo[tipo])}</div></div>`;
-    }
+    if(totV[tipo]===undefined)return;
+    const v=totV[tipo], inv=totI[tipo];
+    const pct=inv&&inv>0?((v-inv)/inv*100):null;
+    mh+=`<div class="metric">
+      <div class="metric-label">${tipoInfo(tipo).label.toLowerCase()}</div>
+      <div class="metric-value">${fmt(v)}</div>
+      ${pct!==null?`<div class="metric-delta ${pct>=0?'delta-pos':'delta-neg'}">${fmtPct(pct)} s/ investido</div>`:''}
+    </div>`;
   });
-  document.getElementById('dash-metrics').innerHTML=metricsHtml;
+  document.getElementById('dash-metrics').innerHTML=mh;
 
-  destroyChart('chart-tipo');destroyChart('chart-banco');
-  const tipoLabels=Object.keys(totaisPorTipo).map(k=>tipoInfo(k)?.label||k);
-  const tipoVals=Object.values(totaisPorTipo);
-  const tipoColors=Object.keys(totaisPorTipo).map(k=>tipoInfo(k)?.color||'#888');
-  if(tipoVals.length>0){
-    charts['chart-tipo']=new Chart(document.getElementById('chart-tipo'),{type:'doughnut',data:{labels:tipoLabels,datasets:[{data:tipoVals,backgroundColor:tipoColors,borderWidth:2,borderColor:'transparent'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+fmt(ctx.raw)}}}}});
+  destroyChart('chart-tipo'); destroyChart('chart-banco');
+  if(Object.keys(totV).length){
+    charts['chart-tipo']=new Chart(document.getElementById('chart-tipo'),{type:'doughnut',
+      data:{labels:Object.keys(totV).map(k=>tipoInfo(k).label),datasets:[{data:Object.values(totV),backgroundColor:Object.keys(totV).map(k=>tipoInfo(k).color),borderWidth:2,borderColor:'transparent'}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+fmt(ctx.raw)}}}}});
   }
-  const bancoLabels=Object.keys(totaisPorBanco);
-  const bancoVals=Object.values(totaisPorBanco);
-  const bancoColors=['#378ADD','#639922','#BA7517','#D85A30','#7F77DD','#1D9E75','#D4537E','#888780'];
-  if(bancoVals.length>0){
-    charts['chart-banco']=new Chart(document.getElementById('chart-banco'),{type:'doughnut',data:{labels:bancoLabels,datasets:[{data:bancoVals,backgroundColor:bancoColors.slice(0,bancoLabels.length),borderWidth:2,borderColor:'transparent'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:11},boxWidth:10}},tooltip:{callbacks:{label:ctx=>' '+fmt(ctx.raw)}}}}});
+  if(Object.keys(totB).length){
+    const bColors=['#378ADD','#639922','#BA7517','#D85A30','#7F77DD','#1D9E75','#D4537E','#888780'];
+    charts['chart-banco']=new Chart(document.getElementById('chart-banco'),{type:'doughnut',
+      data:{labels:Object.keys(totB),datasets:[{data:Object.values(totB),backgroundColor:bColors.slice(0,Object.keys(totB).length),borderWidth:2,borderColor:'transparent'}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:11},boxWidth:10}},tooltip:{callbacks:{label:ctx=>' '+fmt(ctx.raw)}}}}});
   }
 
   if(!lastKey||!state.contas.length){
-    document.getElementById('dash-detalhe').innerHTML='<div class="empty-state"><i class="ti ti-inbox" aria-hidden="true" style="font-size:32px;display:block;margin-bottom:8px"></i>Ainda sem dados. Adiciona contas e regista o primeiro mês.</div>';
-    return;
+    document.getElementById('dash-detalhe').innerHTML='<div class="empty-state"><i class="ti ti-inbox" style="font-size:32px;display:block;margin-bottom:8px"></i>Ainda sem dados. Adiciona contas e regista o primeiro mês.</div>';
+    document.getElementById('dash-rentab').innerHTML='';return;
   }
+
+  /* detalhe por banco */
   const r=state.registos[lastKey];
   const bancos={};
-  state.contas.forEach(c=>{
-    if(!bancos[c.banco])bancos[c.banco]={contas:[],tipo:c.tipo};
-    bancos[c.banco].contas.push(c);
-  });
-  let html='';
-  Object.entries(bancos).forEach(([banco,info])=>{
-    html+=`<div class="card"><div style="font-weight:500;font-size:14px;margin-bottom:8px">${banco}</div>`;
-    info.contas.forEach(c=>{
-      const v=parseFloat(r?r[c.id]||0:0);
-      html+=`<div class="account-row"><span class="account-dot" style="background:${tipoInfo(c.tipo)?.color||'#888'}"></span><div><div class="account-name">${c.nome}</div></div><div><span class="type-badge" style="${badgeStyle(c.tipo)}">${tipoInfo(c.tipo)?.label||c.tipo}</span></div><div class="account-val">${fmt(v,c.moeda)}</div></div>`;
+  state.contas.forEach(c=>{if(!bancos[c.banco])bancos[c.banco]=[];bancos[c.banco].push(c);});
+  let dh='';
+  Object.entries(bancos).forEach(([banco,contas])=>{
+    dh+=`<div class="card"><div style="font-weight:500;font-size:14px;margin-bottom:8px">${banco}</div>`;
+    contas.forEach(c=>{
+      const v=getValor(r,c.id);
+      const inv=trackRent(c.tipo)?investidoAte(c,lastKey):null;
+      const pct=inv&&inv>0?((v-inv)/inv*100):null;
+      dh+=`<div class="account-row">
+        <span class="account-dot" style="background:${tipoInfo(c.tipo).color}"></span>
+        <div class="account-name">${c.nome}</div>
+        <span class="type-badge" style="${badgeStyle(c.tipo)}">${tipoInfo(c.tipo).label}</span>
+        ${pct!==null?`<span class="account-rent ${rentClass(pct)}">${fmtPct(pct)}</span>`:''}
+        <div class="account-val">${fmt(v,c.moeda)}</div>
+      </div>`;
     });
-    html+='</div>';
+    dh+='</div>';
   });
-  document.getElementById('dash-detalhe').innerHTML=html;
+  document.getElementById('dash-detalhe').innerHTML=dh;
+
+  /* secção rentabilidade consolidada */
+  const tiposR=Object.keys(state.tipos).filter(t=>trackRent(t)&&totV[t]!==undefined);
+  if(!tiposR.length){document.getElementById('dash-rentab').innerHTML='';return;}
+  let totalV=0,totalI=0;
+  tiposR.forEach(t=>{totalV+=totV[t]||0; totalI+=totI[t]||0;});
+  const pctG=totalI>0?((totalV-totalI)/totalI*100):null;
+
+  let rh=`<div class="section-title" style="margin-top:1rem">rentabilidade</div><div class="card">`;
+  tiposR.forEach(t=>{
+    const v=totV[t]||0, inv=totI[t]||0;
+    const p=inv>0?((v-inv)/inv*100):null;
+    rh+=`<div class="rentab-row">
+      <span style="display:flex;align-items:center;gap:6px">
+        <span style="width:8px;height:8px;border-radius:50%;background:${tipoInfo(t).color};display:inline-block"></span>
+        ${tipoInfo(t).label}
+      </span>
+      <span style="display:flex;gap:12px;align-items:center">
+        <span style="font-size:12px;color:var(--color-text-secondary)">${fmt(inv)} investido</span>
+        <span style="font-weight:500">${fmt(v)}</span>
+        ${p!==null?`<span class="account-rent ${rentClass(p)}">${fmtPct(p)}</span>`:'<span class="account-rent rent-neu">—</span>'}
+      </span>
+    </div>`;
+  });
+  if(pctG!==null){
+    rh+=`<div class="rentab-row" style="border-top:0.5px solid var(--color-border-tertiary);margin-top:6px;padding-top:8px">
+      <span style="font-weight:500">Total carteira</span>
+      <span style="display:flex;gap:12px;align-items:center">
+        <span style="font-size:12px;color:var(--color-text-secondary)">${fmt(totalI)} investido</span>
+        <span style="font-weight:500">${fmt(totalV)}</span>
+        <span class="account-rent ${rentClass(pctG)}">${fmtPct(pctG)}</span>
+      </span>
+    </div>`;
+  }
+  rh+='</div>';
+  document.getElementById('dash-rentab').innerHTML=rh;
 }
 
-function navMes(d){
-  mesAtual=new Date(mesAtual.getFullYear(),mesAtual.getMonth()+d,1);
-  renderRegisto();
-}
+/* ═══════════════════════════════════ REGISTO ═══════════════════════════════════ */
+function navMes(d){mesAtual=new Date(mesAtual.getFullYear(),mesAtual.getMonth()+d,1);renderRegisto();}
 
 function renderRegisto(){
   const key=mesKey(mesAtual);
   document.getElementById('mes-label').textContent=mesDisplay(mesAtual);
-  const existing=state.registos[key];
-  document.getElementById('registo-status').textContent=existing?'✓ Guardado':'Sem registo';
+  const ex=state.registos[key];
+  document.getElementById('registo-status').textContent=ex?'✓ Guardado':'Sem registo';
 
   if(!state.contas.length){
-    document.getElementById('registo-contas').innerHTML='<div class="empty-state"><i class="ti ti-building-bank" style="font-size:28px;display:block;margin-bottom:8px" aria-hidden="true"></i>Começa por adicionar contas no separador <strong>Contas</strong>.</div>';
-    return;
+    document.getElementById('registo-contas').innerHTML='<div class="empty-state">Começa por adicionar contas no separador <strong>Contas</strong>.</div>';return;
   }
 
   const bancos={};
-  state.contas.forEach(c=>{
-    if(!bancos[c.banco])bancos[c.banco]=[];
-    bancos[c.banco].push(c);
-  });
+  state.contas.forEach(c=>{if(!bancos[c.banco])bancos[c.banco]=[];bancos[c.banco].push(c);});
+
+  /* para calcular investido acumulado pré-reforço-deste-mês usamos chaves anteriores */
+  const allKeys=Object.keys(state.registos).sort();
+  const prevKey=allKeys.filter(k=>k<key).pop();
 
   let html='';
   Object.entries(bancos).forEach(([banco,contas])=>{
-    const subtotal=contas.reduce((a,c)=>a+parseFloat(existing?existing[c.id]||0:0),0);
-    html+=`<div class="registo-card"><div class="registo-header"><span style="font-weight:500;font-size:14px">${banco}</span><span class="registo-total">${fmt(subtotal)}</span></div>`;
+    const sub=contas.reduce((a,c)=>a+getValor(ex,c.id),0);
+    const bid=banco.replace(/\W/g,'_');
+    html+=`<div class="registo-card">
+      <div class="registo-header">
+        <span style="font-weight:500;font-size:14px">${banco}</span>
+        <span class="registo-total" id="sub-${bid}">${fmt(sub)}</span>
+      </div>`;
+
+    /* cabeçalho das colunas quando há contas com rentabilidade */
+    const temRent=contas.some(c=>trackRent(c.tipo));
+    if(temRent){
+      html+=`<div style="display:grid;grid-template-columns:1fr 130px 110px auto;gap:8px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:4px">
+        <span></span>
+        <span style="font-size:11px;color:var(--color-text-secondary);text-align:right">Valor atual</span>
+        <span style="font-size:11px;color:var(--color-text-secondary);text-align:right">Reforço do mês</span>
+        <span></span>
+      </div>`;
+    }
+
     contas.forEach(c=>{
-      const val=existing?existing[c.id]||'':'';
-      html+=`<div class="registo-input-row"><span class="account-dot" style="background:${tipoInfo(c.tipo)?.color||'#888'}"></span><span class="registo-name">${c.nome} <span class="type-badge" style="${badgeStyle(c.tipo)}">${tipoInfo(c.tipo)?.label||''}</span></span><input class="registo-input" type="number" step="0.01" min="0" placeholder="0,00" value="${val}" id="inp-${c.id}" oninput="updateSubtotal('${banco}',this)"></div>`;
+      const val=ex?getValor(ex,c.id)||'':'';
+      const ref=ex?getReforco(ex,c.id)||'':'';
+      const hasRent=trackRent(c.tipo);
+
+      /* investido acumulado até ao mês anterior + invInicial (sem reforço deste mês ainda) */
+      let invBase=parseFloat(c.invInicial||0);
+      if(prevKey) Object.keys(state.registos).sort().filter(k=>k<=prevKey).forEach(k=>{ invBase+=getReforco(state.registos[k],c.id); });
+      const invComReforco=invBase+parseFloat(ref||0);
+      const pct=hasRent&&val&&invComReforco>0?((parseFloat(val)-invComReforco)/invComReforco*100):null;
+
+      if(hasRent){
+        html+=`<div class="registo-row" style="display:grid;grid-template-columns:1fr 130px 110px auto;gap:8px;align-items:center">
+          <span class="registo-name" style="display:flex;align-items:center;gap:6px">
+            <span class="account-dot" style="background:${tipoInfo(c.tipo).color}"></span>
+            ${c.nome}
+          </span>
+          <input class="registo-input" type="number" step="0.01" min="0" placeholder="0,00" value="${val}" id="inp-${c.id}" oninput="onInput('${c.id}','${bid}')">
+          <input class="registo-reforco" type="number" step="0.01" min="0" placeholder="0,00 (opcional)" value="${ref}" id="ref-${c.id}" oninput="onInput('${c.id}','${bid}')">
+          <span class="registo-rent-pill ${pct!==null?rentClass(pct):'rent-neu'}" id="pill-${c.id}">${pct!==null?fmtPct(pct):'—'}</span>
+        </div>`;
+      } else {
+        html+=`<div class="registo-row" style="display:flex;align-items:center;gap:8px">
+          <span class="account-dot" style="background:${tipoInfo(c.tipo).color}"></span>
+          <span class="registo-name" style="flex:1">${c.nome} <span class="type-badge" style="${badgeStyle(c.tipo)}">${tipoInfo(c.tipo).label}</span></span>
+          <input class="registo-input" type="number" step="0.01" min="0" placeholder="0,00" value="${val}" id="inp-${c.id}" oninput="onInput('${c.id}','${bid}')">
+        </div>`;
+      }
     });
     html+='</div>';
   });
   document.getElementById('registo-contas').innerHTML=html;
 }
 
-function updateSubtotal(banco,inp){
-  const bDiv=inp.closest('.registo-card');
-  const inputs=bDiv.querySelectorAll('input');
-  let sub=0;inputs.forEach(i=>sub+=parseFloat(i.value||0));
-  bDiv.querySelector('.registo-total').textContent=fmt(sub);
+function onInput(contaId,bid){
+  const conta=state.contas.find(c=>c.id===contaId);if(!conta)return;
+  const key=mesKey(mesAtual);
+  const allKeys=Object.keys(state.registos).sort();
+  const prevKey=allKeys.filter(k=>k<key).pop();
+
+  if(trackRent(conta.tipo)){
+    const v=parseFloat(document.getElementById('inp-'+contaId)?.value||0);
+    const ref=parseFloat(document.getElementById('ref-'+contaId)?.value||0);
+    let invBase=parseFloat(conta.invInicial||0);
+    if(prevKey) Object.keys(state.registos).sort().filter(k=>k<=prevKey).forEach(k=>{invBase+=getReforco(state.registos[k],contaId);});
+    const invTotal=invBase+ref;
+    const pill=document.getElementById('pill-'+contaId);
+    if(pill){
+      if(invTotal>0){const p=(v-invTotal)/invTotal*100;pill.textContent=fmtPct(p);pill.className='registo-rent-pill '+rentClass(p);}
+      else{pill.textContent='—';pill.className='registo-rent-pill rent-neu';}
+    }
+  }
+
+  /* subtotal banco */
+  const sub=state.contas.filter(c=>c.banco.replace(/\W/g,'_')===bid).reduce((a,c)=>a+parseFloat(document.getElementById('inp-'+c.id)?.value||0),0);
+  const el=document.getElementById('sub-'+bid);if(el)el.textContent=fmt(sub);
 }
 
 function guardarRegisto(){
   const key=mesKey(mesAtual);
   const r={};
   state.contas.forEach(c=>{
-    const el=document.getElementById('inp-'+c.id);
-    if(el)r[c.id]=parseFloat(el.value||0);
+    const vEl=document.getElementById('inp-'+c.id);if(!vEl)return;
+    r[c.id]=parseFloat(vEl.value||0);
+    if(trackRent(c.tipo)){
+      const rEl=document.getElementById('ref-'+c.id);
+      const rv=parseFloat(rEl?.value||0);
+      if(rv>0) r[c.id+'_r']=rv;
+    }
   });
   state.registos[key]=r;
   save();
   document.getElementById('registo-status').textContent='✓ Guardado';
-  renderRegisto();
 }
 
+/* ═══════════════════════════════════ CONTAS ═══════════════════════════════════ */
 function adicionarConta(){
   const nome=document.getElementById('nova-nome').value.trim();
   const banco=document.getElementById('nova-banco').value.trim();
   const tipo=document.getElementById('nova-tipo').value;
   const moeda=document.getElementById('nova-moeda').value;
-  if(!nome||!banco){
-    showAlert('contas','Preenche o nome e o banco / entidade.','info');return;
+  if(!nome||!banco){showAlert('contas','Preenche o nome e o banco / entidade.','info');return;}
+  const conta={id:'c'+Date.now(),nome,banco,tipo,moeda};
+  if(trackRent(tipo)){
+    const inv=parseFloat(document.getElementById('nova-inv-inicial').value||0);
+    if(inv>0) conta.invInicial=inv;
   }
-  const id='c'+Date.now();
-  state.contas.push({id,nome,banco,tipo,moeda});
+  state.contas.push(conta);
   save();
   document.getElementById('nova-nome').value='';
   document.getElementById('nova-banco').value='';
+  document.getElementById('nova-inv-inicial').value='';
   showAlert('contas','Conta adicionada com sucesso.','success');
   renderContas();
 }
 
-function removerConta(id){
-  state.contas=state.contas.filter(c=>c.id!==id);
-  save();renderContas();
-}
-
-function slugify(s){
-  return 't'+s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'')+Date.now().toString().slice(-4);
-}
-
-function adicionarTipo(){
-  const nome=document.getElementById('novo-tipo-nome').value.trim();
-  const cor=document.getElementById('novo-tipo-cor').value;
-  if(!nome){
-    showAlert('tipos','Indica um nome para o tipo.','info');return;
-  }
-  const jaExiste=Object.values(state.tipos).some(t=>t.label.toLowerCase()===nome.toLowerCase());
-  if(jaExiste){
-    showAlert('tipos','Já existe um tipo com esse nome.','info');return;
-  }
-  const id=slugify(nome);
-  state.tipos[id]={label:nome,color:cor};
-  save();
-  document.getElementById('novo-tipo-nome').value='';
-  showAlert('tipos','Tipo adicionado com sucesso.','success');
-  renderTipos();
-}
-
-function editarTipoNome(id,valor){
-  if(!state.tipos[id])return;
-  state.tipos[id].label=valor;
-  save();
-}
-
-function editarTipoCor(id,valor){
-  if(!state.tipos[id])return;
-  state.tipos[id].color=valor;
-  save();
-  renderTipos();
-}
-
-function removerTipo(id){
-  const emUso=state.contas.filter(c=>c.tipo===id).length;
-  if(emUso>0){
-    showAlert('tipos',`Não é possível remover: ${emUso} conta(s) usam este tipo. Muda o tipo dessas contas primeiro.`,'info');
-    return;
-  }
-  delete state.tipos[id];
-  save();
-  renderTipos();
-}
-
-function renderTipos(){
-  const ids=Object.keys(state.tipos);
-  if(!ids.length){
-    document.getElementById('lista-tipos').innerHTML='<div class="empty-state">Ainda sem tipos definidos.</div>';return;
-  }
-  let html='<div class="card">';
-  ids.forEach(id=>{
-    const t=state.tipos[id];
-    const count=state.contas.filter(c=>c.tipo===id).length;
-    html+=`<div class="tipo-row">
-      <input type="color" class="tipo-color-input" value="${t.color}" onchange="editarTipoCor('${id}',this.value)" aria-label="Cor de ${t.label}">
-      <input type="text" class="tipo-name-input" value="${t.label}" onchange="editarTipoNome('${id}',this.value)" aria-label="Nome do tipo">
-      <span class="tipo-count">${count} conta${count===1?'':'s'}</span>
-      <button class="remove-btn" onclick="removerTipo('${id}')" aria-label="Remover ${t.label}"><i class="ti ti-trash" aria-hidden="true"></i></button>
-    </div>`;
-  });
-  html+='</div>';
-  document.getElementById('lista-tipos').innerHTML=html;
-}
-
-function showAlert(page,msg,type){
-  const el=document.getElementById(page+'-alert');
-  el.innerHTML=`<div class="alert alert-${type}">${msg}</div>`;
-  el.style.display='block';
-  setTimeout(()=>{el.style.display='none'},3000);
-}
+function removerConta(id){state.contas=state.contas.filter(c=>c.id!==id);save();renderContas();}
 
 function renderContas(){
-  if(!state.contas.length){
-    document.getElementById('lista-contas').innerHTML='<div class="empty-state">Ainda sem contas adicionadas.</div>';return;
-  }
+  if(!state.contas.length){document.getElementById('lista-contas').innerHTML='<div class="empty-state">Ainda sem contas adicionadas.</div>';return;}
+  const keys=Object.keys(state.registos).sort();
+  const lastKey=keys[keys.length-1];
+  const r=lastKey?state.registos[lastKey]:null;
   const bancos={};
-  state.contas.forEach(c=>{
-    if(!bancos[c.banco])bancos[c.banco]=[];
-    bancos[c.banco].push(c);
-  });
+  state.contas.forEach(c=>{if(!bancos[c.banco])bancos[c.banco]=[];bancos[c.banco].push(c);});
   let html='';
   Object.entries(bancos).forEach(([banco,contas])=>{
     html+=`<div class="card"><div style="font-weight:500;font-size:14px;margin-bottom:8px">${banco}</div>`;
     contas.forEach(c=>{
-      html+=`<div class="account-row"><span class="account-dot" style="background:${tipoInfo(c.tipo)?.color||'#888'}"></span><div class="account-name">${c.nome}<div class="account-bank">${c.moeda}</div></div><span class="type-badge" style="${badgeStyle(c.tipo)}">${tipoInfo(c.tipo)?.label||c.tipo}</span><button class="remove-btn" onclick="removerConta('${c.id}')" aria-label="Remover ${c.nome}"><i class="ti ti-trash" aria-hidden="true"></i></button></div>`;
+      const v=getValor(r,c.id);
+      const inv=trackRent(c.tipo)&&lastKey?investidoAte(c,lastKey):null;
+      const pct=inv&&inv>0?((v-inv)/inv*100):null;
+      html+=`<div class="account-row">
+        <span class="account-dot" style="background:${tipoInfo(c.tipo).color}"></span>
+        <div class="account-name">${c.nome}<div class="account-bank">${c.moeda}${c.invInicial?` · inicial: ${fmt(c.invInicial,c.moeda)}`:''}</div></div>
+        <span class="type-badge" style="${badgeStyle(c.tipo)}">${tipoInfo(c.tipo).label}</span>
+        ${pct!==null?`<span class="account-rent ${rentClass(pct)}">${fmtPct(pct)}</span>`:''}
+        ${v?`<div class="account-val">${fmt(v,c.moeda)}</div>`:''}
+        <button class="remove-btn" onclick="removerConta('${c.id}')" aria-label="Remover ${c.nome}"><i class="ti ti-trash"></i></button>
+      </div>`;
     });
     html+='</div>';
   });
   document.getElementById('lista-contas').innerHTML=html;
 }
 
+/* ═══════════════════════════════════ TIPOS ═══════════════════════════════════ */
+function slugify(s){return 't'+s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'')+Date.now().toString().slice(-4);}
+function adicionarTipo(){
+  const nome=document.getElementById('novo-tipo-nome').value.trim();
+  const cor=document.getElementById('novo-tipo-cor').value;
+  const rent=document.getElementById('novo-tipo-rent').checked;
+  if(!nome){showAlert('tipos','Indica um nome para o tipo.','info');return;}
+  if(Object.values(state.tipos).some(t=>t.label.toLowerCase()===nome.toLowerCase())){showAlert('tipos','Já existe um tipo com esse nome.','info');return;}
+  state.tipos[slugify(nome)]={label:nome,color:cor,trackRent:rent};
+  save(); document.getElementById('novo-tipo-nome').value=''; document.getElementById('novo-tipo-rent').checked=false;
+  showAlert('tipos','Tipo adicionado.','success'); renderTipos();
+}
+function editarTipoNome(id,v){if(state.tipos[id]){state.tipos[id].label=v;save();}}
+function editarTipoCor(id,v){if(state.tipos[id]){state.tipos[id].color=v;save();renderTipos();}}
+function editarTipoRent(id,v){if(state.tipos[id]){state.tipos[id].trackRent=v;save();}}
+function removerTipo(id){
+  const n=state.contas.filter(c=>c.tipo===id).length;
+  if(n>0){showAlert('tipos',`Não é possível remover: ${n} conta(s) usam este tipo.`,'info');return;}
+  delete state.tipos[id];save();renderTipos();
+}
+function renderTipos(){
+  const ids=Object.keys(state.tipos);
+  if(!ids.length){document.getElementById('lista-tipos').innerHTML='<div class="empty-state">Ainda sem tipos definidos.</div>';return;}
+  let html='<div class="card">';
+  ids.forEach(id=>{
+    const t=state.tipos[id];
+    const count=state.contas.filter(c=>c.tipo===id).length;
+    html+=`<div class="tipo-row">
+      <input type="color" class="tipo-color-input" value="${t.color}" onchange="editarTipoCor('${id}',this.value)">
+      <input type="text" class="tipo-name-input" value="${t.label}" onchange="editarTipoNome('${id}',this.value)">
+      <label class="toggle-wrap">
+        <input type="checkbox" ${t.trackRent?'checked':''} onchange="editarTipoRent('${id}',this.checked)">
+        rentabilidade
+      </label>
+      <span class="tipo-count">${count} conta${count===1?'':'s'}</span>
+      <button class="remove-btn" onclick="removerTipo('${id}')"><i class="ti ti-trash"></i></button>
+    </div>`;
+  });
+  html+='</div>';
+  document.getElementById('lista-tipos').innerHTML=html;
+}
+
+/* ═══════════════════════════════════ EVOLUÇÃO ═══════════════════════════════════ */
 function renderEvolucao(){
   destroyChart('chart-evolucao');
   const keys=Object.keys(state.registos).sort();
-  if(keys.length<1){
+  if(!keys.length){
     document.getElementById('evolucao-legend').innerHTML='';
     document.getElementById('historico-tabela').innerHTML='<div class="empty-state">Ainda sem registos para mostrar.</div>';
-    const c=document.getElementById('chart-evolucao');
-    c.parentElement.innerHTML='<div class="no-data-overlay">Ainda sem dados suficientes para o gráfico.</div>';
+    document.getElementById('chart-evolucao').parentElement.innerHTML='<div class="no-data-overlay">Ainda sem dados suficientes para o gráfico.</div>';
     return;
   }
-
   const labels=keys.map(k=>{const[y,m]=k.split('-');return MESES[parseInt(m)-1].slice(0,3)+' '+y.slice(2)});
   const tiposPresentes=[...new Set(state.contas.map(c=>c.tipo))];
-  const datasets=tiposPresentes.map(tipo=>{
-    return {
-      label:tipoInfo(tipo)?.label||tipo,
-      data:keys.map(k=>{
-        const r=state.registos[k];
-        if(!r)return 0;
-        return state.contas.filter(c=>c.tipo===tipo).reduce((a,c)=>a+parseFloat(r[c.id]||0),0);
-      }),
-      backgroundColor:tipoInfo(tipo)?.color+'33',
-      borderColor:tipoInfo(tipo)?.color,
-      borderWidth:2,
-      fill:true,
-      tension:0.4,
-      pointRadius:4,
-      pointBackgroundColor:tipoInfo(tipo)?.color
-    };
-  });
-  datasets.push({
-    label:'Total',
-    data:keys.map(k=>totalPortfolio(k)||0),
-    borderColor:'#7F77DD',
-    borderWidth:2,
-    borderDash:[4,4],
-    fill:false,
-    tension:0.4,
-    pointRadius:3,
-    pointBackgroundColor:'#7F77DD',
-    backgroundColor:'transparent'
-  });
+  const datasets=tiposPresentes.map(tipo=>({
+    label:tipoInfo(tipo).label,
+    data:keys.map(k=>{const r=state.registos[k];return r?state.contas.filter(c=>c.tipo===tipo).reduce((a,c)=>a+getValor(r,c.id),0):0;}),
+    backgroundColor:tipoInfo(tipo).color+'33',borderColor:tipoInfo(tipo).color,
+    borderWidth:2,fill:true,tension:0.4,pointRadius:4,pointBackgroundColor:tipoInfo(tipo).color
+  }));
+  datasets.push({label:'Total',data:keys.map(k=>totalPortfolio(k)||0),borderColor:'#7F77DD',borderWidth:2,borderDash:[4,4],fill:false,tension:0.4,pointRadius:3,pointBackgroundColor:'#7F77DD',backgroundColor:'transparent'});
 
-  const legend=document.getElementById('evolucao-legend');
-  legend.innerHTML=[...tiposPresentes.map(t=>`<span class="legend-item"><span class="legend-dot" style="background:${tipoInfo(t)?.color}"></span>${tipoInfo(t)?.label||t}</span>`),`<span class="legend-item"><span class="legend-dot" style="background:#7F77DD;border:1px dashed #7F77DD"></span>Total</span>`].join('');
+  document.getElementById('evolucao-legend').innerHTML=[
+    ...tiposPresentes.map(t=>`<span class="legend-item"><span class="legend-dot" style="background:${tipoInfo(t).color}"></span>${tipoInfo(t).label}</span>`),
+    `<span class="legend-item"><span class="legend-dot" style="background:#7F77DD;border:1px dashed #7F77DD"></span>Total</span>`
+  ].join('');
 
-  const canvas=document.getElementById('chart-evolucao');
-  if(!canvas)return;
-  charts['chart-evolucao']=new Chart(canvas,{type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:ctx=>ctx.dataset.label+': '+fmt(ctx.raw)}}},scales:{x:{grid:{color:'rgba(128,128,128,.1)'},ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{grid:{color:'rgba(128,128,128,.1)'},ticks:{callback:v=>v.toLocaleString('pt-PT')+'€',font:{size:11}}}}}});
+  charts['chart-evolucao']=new Chart(document.getElementById('chart-evolucao'),{type:'line',data:{labels,datasets},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:ctx=>ctx.dataset.label+': '+fmt(ctx.raw)}}},
+      scales:{x:{grid:{color:'rgba(128,128,128,.1)'},ticks:{font:{size:11},autoSkip:false,maxRotation:45}},
+              y:{grid:{color:'rgba(128,128,128,.1)'},ticks:{callback:v=>v.toLocaleString('pt-PT')+'€',font:{size:11}}}}}});
 
-  let thtml='<div class="card"><table><thead><tr style="border-bottom:0.5px solid var(--color-border-tertiary)"><th style="text-align:left;color:var(--color-text-secondary);font-weight:500">Mês</th>';
-  tiposPresentes.forEach(t=>{thtml+=`<th style="text-align:right;color:var(--color-text-secondary);font-weight:500">${tipoInfo(t)?.label}</th>`;});
-  thtml+='<th style="text-align:right;color:var(--color-text-secondary);font-weight:500">Total</th><th style="text-align:right;color:var(--color-text-secondary);font-weight:500">Δ</th></tr></thead><tbody>';
-  const keysRev=[...keys].reverse();
-  keysRev.forEach((k,i)=>{
+  let th='<div class="card"><table><thead><tr style="border-bottom:0.5px solid var(--color-border-tertiary)"><th style="text-align:left;color:var(--color-text-secondary);font-weight:500">Mês</th>';
+  tiposPresentes.forEach(t=>{th+=`<th style="text-align:right;color:var(--color-text-secondary);font-weight:500">${tipoInfo(t).label}</th>`;});
+  th+='<th style="text-align:right;color:var(--color-text-secondary);font-weight:500">Total</th><th style="text-align:right;color:var(--color-text-secondary);font-weight:500">Δ</th></tr></thead><tbody>';
+  [...keys].reverse().forEach((k,i,arr)=>{
     const total=totalPortfolio(k)||0;
-    const prevK=keysRev[i+1];
-    const prev=prevK?totalPortfolio(prevK)||0:null;
+    const prev=arr[i+1]?totalPortfolio(arr[i+1])||0:null;
     const delta=prev!==null?total-prev:null;
     const [y,m]=k.split('-');
-    thtml+=`<tr style="border-bottom:0.5px solid var(--color-border-tertiary)"><td>${MESES[parseInt(m)-1]} ${y}</td>`;
+    th+=`<tr style="border-bottom:0.5px solid var(--color-border-tertiary)"><td>${MESES[parseInt(m)-1]} ${y}</td>`;
     tiposPresentes.forEach(tipo=>{
       const r=state.registos[k];
-      const v=r?state.contas.filter(c=>c.tipo===tipo).reduce((a,c)=>a+parseFloat(r[c.id]||0),0):0;
-      thtml+=`<td style="text-align:right">${fmt(v)}</td>`;
+      const v=r?state.contas.filter(c=>c.tipo===tipo).reduce((a,c)=>a+getValor(r,c.id),0):0;
+      th+=`<td style="text-align:right">${fmt(v)}</td>`;
     });
-    thtml+=`<td style="text-align:right;font-weight:500">${fmt(total)}</td><td style="text-align:right;font-size:12px;color:${delta===null?'var(--color-text-secondary)':delta>=0?'var(--color-text-success)':'var(--color-text-danger)'}">${delta===null?'—':(delta>=0?'+':'')+fmt(delta)}</td></tr>`;
+    th+=`<td style="text-align:right;font-weight:500">${fmt(total)}</td><td style="text-align:right;font-size:12px;color:${delta===null?'var(--color-text-secondary)':delta>=0?'var(--color-text-success)':'var(--color-text-danger)'}">${delta===null?'—':(delta>=0?'+':'')+fmt(delta)}</td></tr>`;
   });
-  thtml+='</tbody></table></div>';
-  document.getElementById('historico-tabela').innerHTML=thtml;
+  th+='</tbody></table></div>';
+  document.getElementById('historico-tabela').innerHTML=th;
 }
 
+/* ═══════════════════════════════════ UTILITÁRIOS ═══════════════════════════════════ */
+function showAlert(page,msg,type){
+  const el=document.getElementById(page+'-alert');
+  el.innerHTML=`<div class="alert alert-${type}">${msg}</div>`;
+  el.style.display='block';
+  setTimeout(()=>{el.style.display='none'},3500);
+}
 function exportarDados(){
   const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;
-  a.download='portfolio-backup-'+mesKey(new Date())+'.json';
-  a.click();
+  const a=document.createElement('a');a.href=url;a.download='portfolio-backup-'+mesKey(new Date())+'.json';a.click();
   URL.revokeObjectURL(url);
 }
-
 function importarDados(evt){
-  const file=evt.target.files[0];
-  if(!file)return;
+  const file=evt.target.files[0];if(!file)return;
   const reader=new FileReader();
-  reader.onload=function(e){
+  reader.onload=e=>{
     try{
       const data=JSON.parse(e.target.result);
       if(data.contas&&data.registos){
         state=data;
-        if(!state.tipos||!Object.keys(state.tipos).length){
-          state.tipos=JSON.parse(JSON.stringify(TIPOS_SEED));
-        }
-        save();
-        populateTipoSelect();
+        if(!state.tipos||!Object.keys(state.tipos).length)state.tipos=JSON.parse(JSON.stringify(TIPOS_SEED));
+        Object.values(state.tipos).forEach(t=>{if(t.trackRent===undefined)t.trackRent=false;});
+        save();populateTipoSelect();
         renderDashboard();renderRegisto();renderContas();renderTipos();renderEvolucao();
         alert('Backup importado com sucesso.');
-      }else{
-        alert('Ficheiro inválido.');
-      }
-    }catch(err){
-      alert('Erro ao ler o ficheiro: '+err.message);
-    }
+      }else{alert('Ficheiro inválido.');}
+    }catch(err){alert('Erro ao ler o ficheiro: '+err.message);}
   };
-  reader.readAsText(file);
-  evt.target.value='';
+  reader.readAsText(file);evt.target.value='';
 }
-
-function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id]}}
+function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
 
 load();
 populateTipoSelect();
