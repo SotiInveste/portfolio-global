@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio Pessoal</title>
+  <title>Portfólio Global</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -12,7 +12,7 @@
 <!-- LOGIN -->
 <div id="screen-login" class="screen" style="display:none">
   <div class="login-wrap">
-    <h1>Portfolio Pessoal</h1>
+    <h1>Portfólio Global</h1>
     <p class="login-sub">Introduz o teu email para receber o link de acesso.</p>
     <div class="form-group">
       <label for="login-email">Email</label>
@@ -29,7 +29,7 @@
 <div id="screen-app" class="screen" style="display:none">
   <div class="container">
     <div class="app-header">
-      <h1>Portfolio Pessoal</h1>
+      <h1>Portfólio Global</h1>
       <button class="btn-ghost btn-sm" onclick="signOut()" title="Sair">
         <i class="ti ti-logout"></i>
       </button>
@@ -75,9 +75,9 @@
     <div id="page-registo" class="page">
       <div class="month-header">
         <div class="month-nav">
-          <button onclick="navMes(-1)"><i class="ti ti-chevron-left"></i></button>
-          <span class="month-label" id="mes-label"></span>
-          <button onclick="navMes(1)"><i class="ti ti-chevron-right"></i></button>
+          <button onclick="navMes(-1)" aria-label="Mês anterior"><i class="ti ti-chevron-left"></i></button>
+          <input type="month" id="mes-picker" onchange="onMesPicker(this.value)">
+          <button onclick="navMes(1)" aria-label="Mês seguinte"><i class="ti ti-chevron-right"></i></button>
         </div>
         <span id="registo-status"></span>
       </div>
@@ -173,6 +173,8 @@
     <p>A carregar...</p>
   </div>
 </div>
+
+<div id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="js/supabase.js"></script>
