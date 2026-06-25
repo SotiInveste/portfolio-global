@@ -2,14 +2,34 @@
 // Monthly record page
 // ============================================================
 
+let _toastTimer = null;
+function showToast(msg, icon = 'ti-circle-check') {
+  const el = document.getElementById('toast');
+  if (!el) return;
+  el.innerHTML = `<i class="ti ${icon}"></i> ${msg}`;
+  el.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
 function navMes(dir) {
   mesAtual = new Date(mesAtual.getFullYear(), mesAtual.getMonth() + dir, 1);
   renderRegisto();
 }
 
+function onMesPicker(value) {
+  if (!value) return;
+  const [y, m] = value.split('-').map(Number);
+  mesAtual = new Date(y, m - 1, 1);
+  renderRegisto();
+}
+
 function renderRegisto() {
   const month = mesKey(mesAtual);
-  document.getElementById('mes-label').textContent = mesDisplay(mesAtual);
+
+  // Sync picker
+  const picker = document.getElementById('mes-picker');
+  if (picker) picker.value = month;
 
   const hasRecord = state.records.some(r => r.month === month);
   document.getElementById('registo-status').textContent = hasRecord ? '✓ Guardado' : 'Sem registo';
@@ -18,6 +38,7 @@ function renderRegisto() {
     document.getElementById('registo-contas').innerHTML =
       '<div class="empty-state">Começa por adicionar contas no separador <strong>Contas</strong>.</div>';
     return;
+
   }
 
   // All months before this one (to compute invested base)
@@ -171,6 +192,7 @@ async function saveMonthlyRecord() {
     const fresh = await dbGetRecords();
     state.records = fresh;
     document.getElementById('registo-status').textContent = '✓ Guardado';
+    showToast('Registo guardado com sucesso');
   } catch (e) {
     alert('Erro ao guardar: ' + e.message);
   }

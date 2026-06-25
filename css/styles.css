@@ -274,8 +274,44 @@ input, select {
   color: var(--text-primary);
   display: flex; align-items: center; justify-content: center;
 }
-.month-label { font-size: 15px; font-weight: 500; min-width: 120px; text-align: center; }
+#mes-picker {
+  font-size: 15px;
+  font-weight: 500;
+  font-family: var(--font);
+  border: 0.5px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 5px 10px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+}
 #registo-status { font-size: 12px; color: var(--text-secondary); }
+
+/* ── Toast notification ── */
+#toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  padding: 10px 20px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 4px 20px rgba(0,0,0,.15);
+  transition: transform .25s ease, opacity .25s ease;
+  opacity: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+#toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
 .registo-card {
   background: var(--bg-primary);
   border: 0.5px solid var(--border-light);
