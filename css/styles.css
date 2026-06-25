@@ -384,3 +384,8 @@ th, td { padding: 7px 4px; }
   .registo-input { width: 90px; }
   .registo-secondary, .registo-div-input { width: 80px; }
 }
+
+/* ── Boot state: mostra loading, esconde tudo o resto ── */
+body.booting #screen-login,
+body.booting #screen-app  { display: none !important; }
+body.booting #screen-loading { display: block !important; }

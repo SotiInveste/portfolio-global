@@ -3,6 +3,7 @@
 // ============================================================
 
 function showScreen(id) {
+  document.body.classList.remove('booting');
   document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
   document.getElementById(id).style.display = 'block';
 }
@@ -19,29 +20,55 @@ function showPage(p, evt) {
   if (p === 'tipos')     renderTipos();
 }
 
+async function bootApp(session) {
+  showScreen('screen-loading');
+  try {
+    await loadAllData();
+    showScreen('screen-app');
+    renderDashboard();
+    renderRegisto();
+  } catch (e) {
+    console.error('Erro ao carregar dados:', e);
+    alert('Erro ao carregar dados: ' + e.message);
+    showScreen('screen-login');
+  }
+}
+
 async function initApp() {
-  // SDK already loaded via <script> tag in index.html
   initSupabase();
 
-  // onAuthStateChange fires once immediately with the current session
-  sb.auth.onAuthStateChange(async (event, session) => {
-    if (session) {
+  // Handle magic link: Supabase v2 picks up the token from the URL hash
+  // automatically when we call getSession(), but we need to give it a moment
+  const { data: { session } } = await sb.auth.getSession();
+
+  if (session) {
+    await bootApp(session);
+  } else {
+    // Check if there's a hash fragment — magic link redirect
+    const hash = window.location.hash;
+    if (hash && hash.includes('access_token')) {
+      // Let Supabase process the token from the URL
       showScreen('screen-loading');
-      try {
-        await loadAllData();
-        showScreen('screen-app');
-        renderDashboard();
-        renderRegisto();
-      } catch (e) {
-        alert('Erro ao carregar dados: ' + e.message);
-        showScreen('screen-login');
+      const { data, error } = await sb.auth.exchangeCodeForSession
+        ? sb.auth.exchangeCodeForSession(hash)   // PKCE flow (newer)
+        : Promise.resolve({ data: null });         // fallback
+
+      if (!error && data?.session) {
+        await bootApp(data.session);
+        return;
       }
-    } else {
-      // No session — show login (handles both fresh visits and sign-outs)
+    }
+    showScreen('screen-login');
+  }
+
+  // Keep listening for auth changes (sign in via magic link tab, sign out)
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_IN' && session) {
+      await bootApp(session);
+    } else if (event === 'SIGNED_OUT') {
       showScreen('screen-login');
     }
   });
 }
 
-// Start when DOM is ready
 document.addEventListener('DOMContentLoaded', initApp);
