@@ -5,12 +5,7 @@
 const SUPABASE_URL = 'https://riibjrhagsjxviqxwqrb.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJpaWJqcmhhZ3NqeHZpcXh3cXJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxOTkyNzQsImV4cCI6MjA5Nzc3NTI3NH0.9hCqmSangBy3jZPEcFbppO8fxI4JZwotJePuhJWRfQ0';
 
-// Load Supabase SDK dynamically
-const _sbScript = document.createElement('script');
-_sbScript.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
-document.head.appendChild(_sbScript);
-
-let sb; // Supabase client, initialized in app.js after SDK loads
+let sb; // Supabase client, initialized in app.js
 
 function initSupabase() {
   sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);

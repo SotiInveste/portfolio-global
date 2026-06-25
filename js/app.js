@@ -20,19 +20,10 @@ function showPage(p, evt) {
 }
 
 async function initApp() {
-  // Wait for Supabase SDK to load
-  await new Promise(resolve => {
-    if (typeof supabase !== 'undefined') return resolve();
-    const s = document.querySelector('script[src*="supabase"]');
-    s.addEventListener('load', resolve);
-  });
-
+  // SDK already loaded via <script> tag in index.html
   initSupabase();
 
-  // Handle magic link redirect (token in URL hash)
-  const { data: { session: urlSession } } = await sb.auth.getSessionFromUrl?.() || { data: { session: null } };
-
-  // Listen for auth state changes
+  // onAuthStateChange fires once immediately with the current session
   sb.auth.onAuthStateChange(async (event, session) => {
     if (session) {
       showScreen('screen-loading');
@@ -46,14 +37,11 @@ async function initApp() {
         showScreen('screen-login');
       }
     } else {
+      // No session — show login (handles both fresh visits and sign-outs)
       showScreen('screen-login');
     }
   });
-
-  // Check existing session
-  const session = await getSession();
-  if (!session) showScreen('screen-login');
 }
 
-// Start
-initApp();
+// Start when DOM is ready
+document.addEventListener('DOMContentLoaded', initApp);
