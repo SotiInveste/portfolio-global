@@ -63,7 +63,7 @@ async function removeAccount(id) {
     state.records  = state.records.filter(r => r.account_id !== id);
     renderContas();
   } catch (e) {
-    alert('Erro ao remover conta: ' + e.message);
+    showToast('Erro ao remover conta: ' + e.message, 'error');
   }
 }
 

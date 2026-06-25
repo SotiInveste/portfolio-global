@@ -2,16 +2,6 @@
 // Monthly record page
 // ============================================================
 
-let _toastTimer = null;
-function showToast(msg, icon = 'ti-circle-check') {
-  const el = document.getElementById('toast');
-  if (!el) return;
-  el.innerHTML = `<i class="ti ${icon}"></i> ${msg}`;
-  el.classList.add('show');
-  clearTimeout(_toastTimer);
-  _toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
-}
-
 function navMes(dir) {
   mesAtual = new Date(mesAtual.getFullYear(), mesAtual.getMonth() + dir, 1);
   renderRegisto();
@@ -194,6 +184,6 @@ async function saveMonthlyRecord() {
     document.getElementById('registo-status').textContent = '✓ Guardado';
     showToast('Registo guardado com sucesso');
   } catch (e) {
-    alert('Erro ao guardar: ' + e.message);
+    showToast('Erro ao guardar: ' + e.message, 'error');
   }
 }

@@ -293,8 +293,6 @@ input, select {
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%) translateY(100px);
-  background: var(--text-primary);
-  color: var(--bg-primary);
   padding: 10px 20px;
   border-radius: 24px;
   font-size: 14px;
@@ -312,6 +310,9 @@ input, select {
   transform: translateX(-50%) translateY(0);
   opacity: 1;
 }
+#toast.toast-success { background: #1a1a1a; color: #fff; }
+#toast.toast-error   { background: #c0392b; color: #fff; }
+#toast.toast-info    { background: #0c447c; color: #fff; }
 .registo-card {
   background: var(--bg-primary);
   border: 0.5px solid var(--border-light);

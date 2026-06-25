@@ -29,7 +29,7 @@ async function bootApp(session) {
     renderRegisto();
   } catch (e) {
     console.error('Erro ao carregar dados:', e);
-    alert('Erro ao carregar dados: ' + e.message);
+    showToast('Erro ao carregar dados: ' + e.message, 'error');
     showScreen('screen-login');
   }
 }

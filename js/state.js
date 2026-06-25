@@ -108,12 +108,24 @@ function exportBackup() {
   URL.revokeObjectURL(url);
 }
 
-// ── UI alert helper ───────────────────────────────────────
+// ── UI helpers ────────────────────────────────────────────
+
+let _toastTimer = null;
+
+function showToast(msg, type = 'success') {
+  const el = document.getElementById('toast');
+  if (!el) return;
+  const icon = type === 'success' ? 'ti-circle-check'
+             : type === 'error'   ? 'ti-circle-x'
+             :                      'ti-info-circle';
+  el.innerHTML = `<i class="ti ${icon}"></i> ${msg}`;
+  el.className = 'toast-' + type;
+  el.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => el.classList.remove('show'), 3500);
+}
 
 function showAlert(page, msg, type) {
-  const el = document.getElementById(page + '-alert');
-  if (!el) return;
-  el.innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
-  el.style.display = 'block';
-  setTimeout(() => { el.style.display = 'none'; }, 3500);
+  // Kept for backward compat — routes to toast
+  showToast(msg, type === 'success' ? 'success' : type === 'info' ? 'info' : 'error');
 }
