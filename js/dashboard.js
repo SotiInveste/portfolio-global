@@ -7,9 +7,6 @@ function renderDashboard() {
   const lastMonth = months[months.length - 1];
   const prevMonth = months[months.length - 2];
 
-  // ── Evolution first (top of dashboard) ─────────────────
-  renderEvolution();
-
   const lastTotal = lastMonth ? totalForMonth(lastMonth) : 0;
   const prevTotal = prevMonth ? totalForMonth(prevMonth) : 0;
   const delta     = lastTotal - prevTotal;
@@ -162,6 +159,7 @@ function renderDashboard() {
     divEl.innerHTML = dvh;
   }
 
+  renderEvolution();
 }
 
 // ── Evolution chart + history table ───────────────────────
