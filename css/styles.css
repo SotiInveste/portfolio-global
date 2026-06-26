@@ -310,7 +310,7 @@ input, select {
   transform: translateX(-50%) translateY(0);
   opacity: 1;
 }
-#toast.toast-success { background: #1a1a1a; color: #fff; }
+#toast.toast-success { background: #1d7a3c; color: #fff; }
 #toast.toast-error   { background: #c0392b; color: #fff; }
 #toast.toast-info    { background: #0c447c; color: #fff; }
 .registo-card {

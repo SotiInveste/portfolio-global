@@ -96,12 +96,12 @@ function renderTipos() {
       <label class="toggle-wrap">
         <input type="checkbox" ${t.track_rent ? 'checked' : ''}
           onchange="updateTypeFlag('${t.id}', 'track_rent', this.checked)">
-        rentabilidade
+        Permite Reforços
       </label>
       <label class="toggle-wrap">
         <input type="checkbox" ${t.track_div ? 'checked' : ''} style="accent-color:#9A6B00"
           onchange="updateTypeFlag('${t.id}', 'track_div', this.checked)">
-        div./juros
+        Ganha div./juros
       </label>
       <span class="tipo-count">${count} conta${count === 1 ? '' : 's'}</span>
       <button class="remove-btn" onclick="removeType('${t.id}')"><i class="ti ti-trash"></i></button>

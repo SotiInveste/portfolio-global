@@ -7,6 +7,9 @@ function renderDashboard() {
   const lastMonth = months[months.length - 1];
   const prevMonth = months[months.length - 2];
 
+  // ── Evolution first (top of dashboard) ─────────────────
+  renderEvolution();
+
   const lastTotal = lastMonth ? totalForMonth(lastMonth) : 0;
   const prevTotal = prevMonth ? totalForMonth(prevMonth) : 0;
   const delta     = lastTotal - prevTotal;
@@ -73,39 +76,11 @@ function renderDashboard() {
 
   // ── No data state ──────────────────────────────────────
   if (!lastMonth || !state.accounts.length) {
-    document.getElementById('dash-detalhe').innerHTML =
-      '<div class="empty-state"><i class="ti ti-inbox"></i>Ainda sem dados. Adiciona contas e regista o primeiro mês.</div>';
     document.getElementById('dash-rentab').innerHTML = '';
     document.getElementById('dash-div').innerHTML = '';
     renderEvolution();
     return;
   }
-
-  // ── Detail by institution ──────────────────────────────
-  const byInst = {};
-  state.accounts.forEach(acc => {
-    if (!byInst[acc.institution]) byInst[acc.institution] = [];
-    byInst[acc.institution].push(acc);
-  });
-  let dh = '';
-  Object.entries(byInst).forEach(([inst, accs]) => {
-    dh += `<div class="card"><div style="font-weight:500;font-size:14px;margin-bottom:8px">${inst}</div>`;
-    accs.forEach(acc => {
-      const v   = getValue(acc.id, lastMonth);
-      const inv = trackRent(acc.type_id) ? investedUpTo(acc, lastMonth) : null;
-      const pct = inv && inv > 0 ? ((v - inv) / inv * 100) : null;
-      const t   = getType(acc.type_id);
-      dh += `<div class="account-row">
-        <span class="account-dot" style="background:${t.color}"></span>
-        <div class="account-name">${acc.name}</div>
-        <span class="type-badge" style="${badgeStyle(acc.type_id)}">${t.label}</span>
-        ${pct !== null ? `<span class="rent-pill ${rentClass(pct)}">${fmtPct(pct)}</span>` : ''}
-        <div class="account-val">${fmt(v, acc.currency)}</div>
-      </div>`;
-    });
-    dh += '</div>';
-  });
-  document.getElementById('dash-detalhe').innerHTML = dh;
 
   // ── Rentability section ────────────────────────────────
   const rentTypes = state.types.filter(t => trackRent(t.id) && totByType[t.id] !== undefined);
@@ -187,7 +162,6 @@ function renderDashboard() {
     divEl.innerHTML = dvh;
   }
 
-  renderEvolution();
 }
 
 // ── Evolution chart + history table ───────────────────────
