@@ -3,14 +3,14 @@
 // ============================================================
 
 function renderDashboard() {
+  if (!document.getElementById('dash-alert')) return; // DOM not ready yet
+
   const months  = allMonths();
   const lastMonth = months[months.length - 1];
   const prevMonth = months[months.length - 2];
 
   const lastTotal = lastMonth ? totalForMonth(lastMonth) : 0;
   const prevTotal = prevMonth ? totalForMonth(prevMonth) : 0;
-  const delta     = lastTotal - prevTotal;
-  const deltaPct  = prevTotal > 0 ? (delta / prevTotal * 100) : 0;
 
   // ── Alert: remind to register ──────────────────────────
   const today = new Date();
@@ -39,26 +39,9 @@ function renderDashboard() {
     });
   }
 
-  // ── Metrics ────────────────────────────────────────────
-  let mh = `<div class="metric">
-    <div class="metric-label">patrimônio total</div>
-    <div class="metric-value">${fmt(lastTotal)}</div>
-    <div class="metric-delta ${delta > 0 ? 'delta-pos' : delta < 0 ? 'delta-neg' : 'delta-neu'}">
-      ${delta >= 0 ? '▲' : '▼'} ${fmt(Math.abs(delta))} (${deltaPct.toFixed(1)}%) vs mês anterior
-    </div>
-  </div>`;
-
-  state.types.forEach(t => {
-    if (totByType[t.id] === undefined) return;
-    const v = totByType[t.id], inv = invByType[t.id];
-    const pct = inv && inv > 0 ? ((v - inv) / inv * 100) : null;
-    mh += `<div class="metric">
-      <div class="metric-label">${t.label.toLowerCase()}</div>
-      <div class="metric-value">${fmt(v)}</div>
-      ${pct !== null ? `<div class="metric-delta ${pct >= 0 ? 'delta-pos' : 'delta-neg'}">${fmtPct(pct)} s/ investido</div>` : ''}
-    </div>`;
-  });
-  document.getElementById('dash-metrics').innerHTML = mh;
+  // ── Header total ───────────────────────────────────────
+  const headerTotal = document.getElementById('header-total');
+  if (headerTotal) headerTotal.textContent = lastTotal > 0 ? fmt(lastTotal) : '';
 
   // ── Donut charts ───────────────────────────────────────
   const typeIds    = Object.keys(totByType);
@@ -165,6 +148,10 @@ function renderDashboard() {
 // ── Evolution chart + history table ───────────────────────
 
 function renderEvolution() {
+  const legendEl   = document.getElementById('evolucao-legend');
+  const historicoEl = document.getElementById('historico-tabela');
+  if (!legendEl || !historicoEl) return; // DOM not ready yet
+
   const months = allMonths();
   const typeIds = [...new Set(state.accounts.map(a => a.type_id))];
 

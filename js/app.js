@@ -25,8 +25,11 @@ async function bootApp(session) {
   try {
     await loadAllData();
     showScreen('screen-app');
-    renderDashboard();
-    renderRegisto();
+    // Wait for browser to paint the DOM before rendering
+    requestAnimationFrame(() => {
+      renderDashboard();
+      renderRegisto();
+    });
   } catch (e) {
     console.error('Erro ao carregar dados:', e);
     showToast('Erro ao carregar dados: ' + e.message, 'error');
